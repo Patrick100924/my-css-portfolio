@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mark Patrick's Portfolio</title>
+    <!-- Importing Poppins Font for a more aesthetic look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* 1. THEME VARIABLES (Separated) */
+        /* 1. THEME VARIABLES */
         :root {
             /* Light Mode Palette */
-            --bg-color: #151f7a;
-            --text-color: #ffffff;      /* Fixed: was white on white */
-            --accent-color: #0070f3;
-            --card-bg: #011897;
-            --nav-bg: #0080b3;
-            --border-color: #dddddd;
+            --bg-color: #9bb8d4;
+            --text-color: #615f5f;
+            --accent-color: #182e47;
+            --card-bg: #7e8fee;
+            --nav-bg: rgba(252, 251, 251, 0.95);
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         /* Dark Mode Palette - Triggered by Checkbox */
-        #dark-mode-toggle:checked ~ .content-wrapper {
-            --bg-color: #121212;
-            --text-color: #ffffff;
-            --accent-color: #3291ff;
-            --card-bg: #1e1e1e;
-            --nav-bg: #1a1a1a;
-            --border-color: #ffffff;
+        #dark-mode-toggle:checked~.content-wrapper {
+            --bg-color: #000000;
+            /* Black Background */
+            --text-color: #f1f5f9;
+            /* Soft light gray text */
+            --accent-color: #00ffff;
+            /* Cyan Button & Accents */
+            --card-bg: #111111;
+            /* Slightly lighter black for cards */
+            --nav-bg: rgba(0, 0, 0, 0.95);
+            --border-color: #333333;
+            --shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
         }
 
         /* 2. GENERAL STYLES */
@@ -31,29 +40,31 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
         #dark-mode-toggle {
-            display: none; 
+            display: none;
         }
 
         .content-wrapper {
             min-height: 100vh;
             background-color: var(--bg-color);
-            transition: 0.3s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         /* 3. NAVIGATION */
         nav {
             background-color: var(--nav-bg);
-            padding: 1rem 2rem;
+            backdrop-filter: blur(12px);
+            padding: 1.2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -61,94 +72,208 @@
             top: 0;
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+        }
+
+        .logo strong {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            transition: color 0.4s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-color);
-            margin-right: 20px;
-            font-weight: bold;
+            margin-right: 30px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
         }
 
         .toggle-label {
             cursor: pointer;
-            padding: 6px 14px;
+            padding: 10px 20px;
             border: 2px solid var(--accent-color);
-            border-radius: 20px;
-            font-size: 0.85rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--text-color);
-            transition: 0.2s;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .toggle-label:hover {
             background-color: var(--accent-color);
-            color: white;
+            color: var(--bg-color);
+        }
+
+        #dark-mode-toggle:checked~.content-wrapper .toggle-label:hover {
+            color: #ffffff;
+            /* White text on cyan hover */
         }
 
         /* 4. HERO SECTION */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 140px 20px;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
-        .hero p { color: var(--accent-color); font-size: 1.2rem; font-weight: 500; }
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 20px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .hero p {
+            color: var(--accent-color);
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            transition: color 0.4s ease;
+        }
 
         /* 5. PROJECTS SECTION */
         #projects {
-            padding: 40px 20px;
-            max-width: 1100px;
+            padding: 80px 5%;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        #projects h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--text-color);
         }
 
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
         }
 
         .project-card {
             background-color: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
+            padding: 35px;
+            border-radius: 20px;
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: var(--shadow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px);
             border-color: var(--accent-color);
         }
 
-        .project-card h3 { margin-bottom: 12px; color: var(--text-color); }
-        .project-card p { font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; opacity: 0.9; }
+        #dark-mode-toggle:checked~.content-wrapper .project-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.15);
+        }
+
+        .project-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .project-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            opacity: 0.85;
+            flex-grow: 1;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
 
         .btn {
             text-decoration: none;
-            padding: 10px 18px;
+            padding: 14px 24px;
             background-color: var(--accent-color);
-            color: white;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            color: #ffffff;
+            /* White text for light mode blue buttons */
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 600;
-            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            flex: 1;
+            border: 2px solid transparent;
+        }
+
+        /* Dark mode specific text color for buttons */
+        #dark-mode-toggle:checked~.content-wrapper .btn {
+            color: #0f172a;
+            /* Dark navy text on Cyan buttons for better contrast */
+            font-weight: 800;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #dark-mode-toggle:checked~.content-wrapper .btn:hover {
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.3);
         }
 
         /* 6. RESPONSIVENESS */
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.2rem; }
-            nav { flex-direction: column; gap: 15px; text-align: center; }
-            .nav-links a { margin: 0 10px; }
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links a {
+                margin-right: 0;
+            }
+
+            .hero {
+                padding: 80px 20px;
+                min-height: 50vh;
+            }
+
+            .project-card {
+                padding: 25px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <input type="checkbox" id="dark-mode-toggle">
 
     <div class="content-wrapper">
-        
+
         <nav>
             <div class="logo"><strong>MPVG</strong></div>
             <div class="nav-links">
@@ -163,14 +288,15 @@
         </section>
 
         <section id="projects">
-            <h2 style="text-align: center; margin-bottom: 20px;">My Projects</h2>
+            <h2>My Projects</h2>
             <div class="project-grid">
-                
+
                 <div class="project-card">
                     <h3>HTML Basics Lab</h3>
                     <p>This is the first website structure I built using pure HTML tags. Focus on semantic elements.</p>
                     <div class="project-links">
-                        <a href="#" class="btn">View Code</a>
+                        <a href="https://github.com/my-html-lab" target="_blank" class="btn">View Code</a>
+                        <a href="#" target="_blank" class="btn">Live Demo</a>
                     </div>
                 </div>
 
@@ -178,7 +304,8 @@
                     <h3>CSS Layout Practice</h3>
                     <p>A practice project focused on mastering Flexbox and CSS Grid layouts for modern web design.</p>
                     <div class="project-links">
-                        <a href="#" class="btn">View Code</a>
+                        <a href="https://github.com/my-css-layout" target="_blank" class="btn">View Code</a>
+                        <a href="#" target="_blank" class="btn">Live Demo</a>
                     </div>
                 </div>
 
@@ -188,4 +315,5 @@
     </div>
 
 </body>
+
 </html>
